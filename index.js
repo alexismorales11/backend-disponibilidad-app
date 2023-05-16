@@ -28,11 +28,3 @@ routes(app);
 app.listen(port, () => {
   console.log("Servidor corriendo en el puerto " + port);
 });
-
-/*
-http.createServer(app).listen(3001, () => {
-  console.log("Servidor corriendo en el puerto " + port);
-});
-
-https.createServer(options, app).listen(port);
-*/
