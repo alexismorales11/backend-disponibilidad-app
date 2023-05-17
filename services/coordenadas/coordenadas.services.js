@@ -1,11 +1,11 @@
 const connection = require("../../database/database");
-class ProyectosServices {
+class CoordenadasServices {
   constructor() {}
 
-  async getProyecto() {
+  async getCoordenadas() {
     try {
       return new Promise((resolve, reject) => {
-        const query = "SELECT * FROM PROYECTOS";
+        const query = "SELECT * FROM COORDENADAS";
         connection.query(query, (error, results, fields) => {
           if (error) {
             return reject(error);
@@ -18,10 +18,10 @@ class ProyectosServices {
     }
   }
 
-  async getProyectoId(id) {
+  async getCoordenadaId(id) {
     try {
       return new Promise((resolve, reject) => {
-        const query = `SELECT * FROM PROYECTOS WHERE id_proyecto = ${id}`;
+        const query = `SELECT * FROM COORDENADAS WHERE id_coordenadas = ${id}`;
         connection.query(query, (error, results, fields) => {
           if (error) {
             return reject(error);
@@ -34,14 +34,14 @@ class ProyectosServices {
     }
   }
 
-  async createProyecto(body) {
+  async createCoordenada(body) {
     try {
       const query = `
         INSERT INTO 
-        PROYECTOS (nombre_proyecto, descripcion_proyecto, fecha_creacion, id_usuario) 
-        VALUES ('${body.nombre_proyecto}','${body.descripcion_proyecto}','${body.fecha_creacion}',${body.id_usuario});
+        COORDENADAS (secuencia_coordenadas, id_inmuebles) 
+        VALUES ('${body.secuencia_coordenadas}',${body.id_inmuebles});
       `;
-      connection.query(query);
+      -connection.query(query);
 
       return body;
     } catch (error) {
@@ -49,17 +49,17 @@ class ProyectosServices {
     }
   }
 
-  async updateProyecto(id, body) {
+  async updateCoordenada(id, body) {
     try {
       const query = `
-        UPDATE PROYECTOS 
-        SET NOMBRE_PROYECTO = '${body.nombre_proyecto}', DESCRIPCION_PROYECTO = '${body.descripcion_proyecto}' 
-        WHERE id_proyecto = ${id};
+        UPDATE COORDENADAS 
+        SET secuencia_coordenadas = '${body.secuencia_coordenadas}'
+        WHERE id_coordenadas = ${id};
       `;
       connection.query(query);
 
       return new Promise((resolve, reject) => {
-        const queryNewProyect = `SELECT * FROM PROYECTOS WHERE id_proyecto = ${id}`;
+        const queryNewProyect = `SELECT * FROM COORDENADAS WHERE id_coordenadas = ${id}`;
         connection.query(queryNewProyect, (error, results, fields) => {
           if (error) {
             return reject(error);
@@ -72,16 +72,16 @@ class ProyectosServices {
     }
   }
 
-  async deleteProyecto(id) {
+  async deleteCoordenada(id) {
     try {
       return new Promise((resolve, reject) => {
-        const queryValidate = `SELECT * FROM PROYECTOS WHERE id_proyecto = ${id}`;
+        const queryValidate = `SELECT * FROM COORDENADAS WHERE id_coordenadas = ${id}`;
         connection.query(queryValidate, (error, results, fields) => {
           if (error) {
             return reject(error);
           }
           const query = `
-            DELETE FROM PROYECTOS WHERE id_proyecto = ${id};
+            DELETE FROM COORDENADAS WHERE id_coordenadas = ${id};
           `;
           connection.query(query);
           resolve(id);
@@ -93,4 +93,4 @@ class ProyectosServices {
   }
 }
 
-module.exports = ProyectosServices;
+module.exports = CoordenadasServices;
