@@ -9,6 +9,17 @@ const routes = require("./routes/index.js");
 //Creacion de instancia Express
 const app = express();
 
+//Cors 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  if (req.method === 'OPTIONS'){
+    res.header('Access-Control-Allow-Methods','PUT, POST, GET, PATCH');
+    return res.status(200).json({});
+  }
+  next();
+});
+
 //Obtenemos el puerto del servidor
 const port = process.env.PORT;
 
